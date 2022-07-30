@@ -23,12 +23,16 @@ const Section = styled.section`
 
 export default function Searchbar() {
   const arrShoppingItems = useShoppingStore((state) => state.arrShoppingItems);
+  const setSearchString = useStore((state) => state.setSearchString);
   const setArrSearchResult = useSearchResultStore(
     (state) => state.setArrSearchResult
   );
 
   function handleChange(event) {
     event.preventDefault();
+    console.log("seaStr: " + event.target.value);
+    setSearchString(event.target.value);
+
     async function fuzzySearch() {
       let searchResult = await search(event.target.value, arrShoppingItems, {
         keySelector: (obj) => obj.name.de,

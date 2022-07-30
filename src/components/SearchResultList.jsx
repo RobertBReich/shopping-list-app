@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import useStore from "../useStore";
+import { useStore } from "../useStore";
 import useSearchResultStore from "../useSearchResultStore";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
@@ -15,7 +15,7 @@ const Button = styled.button`
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s;
+  animation: fadeIn 1s;
 
   @keyframes fadeIn {
     0% {
@@ -29,25 +29,40 @@ const Button = styled.button`
   }
 `;
 
-const Section = styled.section`
-  /* löppt noch nicht */
-  @for $i from 1 through 120 {
-    button:nth-child($i) {
-      animation-delay: #{$i * 0.1}s;
-    }
-  }
-`;
-
 export default function SearchResultList() {
-  let searchString = useStore((state) => state.searchString);
+  const searchString = useStore((state) => state.searchString);
+  const setSearchString = useStore((state) => state.setSearchString);
   let arrSearchResult =
     useSearchResultStore((state) => state.arrSearchResult) || [];
+  let searchFailed =
+    arrSearchResult.length === 0 && searchString.length !== 0 ? false : true;
 
+  console.log(
+    arrSearchResult.length +
+      " sf: " +
+      searchString.length +
+      " : " +
+      searchFailed
+  );
   return (
-    <Section className="search-result-list">
-      {arrSearchResult.map((items) => {
-        return <Button key={nanoid()}>{items.name.de}</Button>;
-      })}
-    </Section>
+    <section className="search-result-list">
+      {searchFailed ? (
+        arrSearchResult.map((items, index) => {
+          return (
+            <Button
+              key={nanoid()}
+              style={{ animationDelay: 0.003 * index + "s" }}
+            >
+              {items.name.de}
+            </Button>
+          );
+        })
+      ) : (
+        <p>
+          Wir konnten nicht finden, wonach du gesucht hast. Das tut uns ehrlich
+          leid. 😂
+        </p>
+      )}
+    </section>
   );
 }

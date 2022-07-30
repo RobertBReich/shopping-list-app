@@ -76,23 +76,15 @@ img {
 
 .sbx-custom__submit {
   position: absolute;
-  top: 25px;
+  top: 27px;
   left: 16px;
   border: none;
   background: none;
 }
 
 .sbx-custom__submit::before {
-  display: inline-block;
-  /* margin-right: -4px; */
-  /* height: 100%; */
-  vertical-align: middle;
+  display: block;
   content: "🔎";
-}
-
-.sbx-custom__submit:hover,
-.sbx-custom__submit:active {
-  cursor: pointer;
 }
 
 .sbx-custom__submit:focus {

@@ -4,10 +4,8 @@ export const useStore = create((set) => {
   return {
     searchString: "",
 
-    setSearchString: () => {
-      set((state) => {
-        return { searchString: state.searchString };
-      });
+    setSearchString: (newString) => {
+      set({ searchString: newString });
     },
   };
 });
