@@ -4,7 +4,6 @@ import SearchResultList from "./components/SearchResultList";
 import Headline from "./components/Headline";
 import React, { useEffect } from "react";
 import { useShoppingStore, useShoppingCategoriesStore } from "./useStore";
-// import useSearchResultStore from "./useSearchResultStore";
 
 function App() {
   const strShoppingItemsURL = "https://fetch-me.vercel.app/api/shopping/items";
@@ -17,9 +16,6 @@ function App() {
   const setArrShoppingCategories = useShoppingCategoriesStore(
     (state) => state.setArrShoppingCategories
   );
-  // const arrSearchResult = useSearchResultStore(
-  //   (state) => state.arrSearchResult
-  // );
 
   async function fetchItems(url) {
     const response = await fetch(url);
@@ -41,8 +37,8 @@ function App() {
 
   return (
     <div className="App">
+      <Headline />
       <div className="App-header">
-        <Headline />
         <Searchbar />
         <SearchResultList />
       </div>

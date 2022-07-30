@@ -2,6 +2,24 @@ import { useShoppingStore, useStore } from "../useStore";
 import { useSearchResultStore } from "../useSearchResultStore";
 import { search } from "fast-fuzzy";
 import SearchResultList from "./SearchResultList";
+import styled from "styled-components";
+
+// Searchbar
+const Input = styled.input`
+  min-width: 100%;
+  padding: 12px 16px 12px 40px;
+  font-size: 1.5rem;
+  margin: 16px auto;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.15);
+  /* ... */
+`;
+
+const Section = styled.section`
+  width: 100%;
+  position: relative;
+`;
 
 export default function Searchbar() {
   const arrShoppingItems = useShoppingStore((state) => state.arrShoppingItems);
@@ -31,13 +49,18 @@ export default function Searchbar() {
   }
 
   return (
-    <div>
-      <input
+    <Section>
+      <Input
         type="search"
-        placeholder="Tippe um zu suchen"
+        placeholder=" Tippe um zu suchen"
         aria-labelledby="search-title"
         onChange={handleChange}
-      ></input>
-    </div>
+      ></Input>
+      <button
+        type="submit"
+        title="Submit your search query."
+        className="sbx-custom__submit"
+      ></button>
+    </Section>
   );
 }
