@@ -4,6 +4,7 @@ import SearchResultList from "./components/SearchResultList";
 import Headline from "./components/Headline";
 import React, { useEffect } from "react";
 import { useShoppingStore, useShoppingCategoriesStore } from "./useStore";
+import ShoppingList from "./components/ShoppingList";
 
 function App() {
   const strShoppingItemsURL = "https://fetch-me.vercel.app/api/shopping/items";
@@ -39,6 +40,7 @@ function App() {
     <div className="App">
       <Headline />
       <div className="App-header">
+        <ShoppingList />
         <Searchbar />
         <SearchResultList />
       </div>

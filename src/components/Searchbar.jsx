@@ -1,5 +1,4 @@
-import { useShoppingStore, useStore } from "../useStore";
-import { useSearchResultStore } from "../useSearchResultStore";
+import { useShoppingStore, useSearchResultStore, useStore } from "../useStore";
 import { search } from "fast-fuzzy";
 import SearchResultList from "./SearchResultList";
 import styled from "styled-components";
