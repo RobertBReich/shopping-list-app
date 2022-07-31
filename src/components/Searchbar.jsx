@@ -1,9 +1,11 @@
-import { useShoppingStore, useSearchResultStore, useStore } from "../useStore";
+import useShoppingStore from "./zustände/useShoppingStore";
+import useSearchResultStore from "./zustände/useSearchResultStore";
+import useLanguageStore from "./zustände/useLanguageStore";
+import useSearchStringStore from "./zustände/useSearchStringStore";
 import { search } from "fast-fuzzy";
-import SearchResultList from "./SearchResultList";
 import styled from "styled-components";
 
-// Searchbar
+// Styles
 const Input = styled.input`
   min-width: 100%;
   padding: 12px 16px 12px 40px;
@@ -12,9 +14,7 @@ const Input = styled.input`
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.15);
-  /* ... */
 `;
-
 const Section = styled.section`
   width: 100%;
   position: relative;
@@ -22,26 +22,28 @@ const Section = styled.section`
 
 export default function Searchbar() {
   const arrShoppingItems = useShoppingStore((state) => state.arrShoppingItems);
-  const setSearchString = useStore((state) => state.setSearchString);
+  const setSearchString = useSearchStringStore(
+    (state) => state.setSearchString
+  );
   const setArrSearchResult = useSearchResultStore(
     (state) => state.setArrSearchResult
   );
+  const strLanguage = useLanguageStore((state) => state.strLanguage);
 
   function handleChange(event) {
     event.preventDefault();
-    console.log("seaStr: " + event.target.value);
+
     setSearchString(event.target.value);
 
     async function fuzzySearch() {
       let searchResult = await search(event.target.value, arrShoppingItems, {
-        keySelector: (obj) => obj.name.de,
+        keySelector: (obj) => obj.name[strLanguage],
       });
 
       return searchResult;
     }
     //arrSearchResult = searchResult;
     async function successCallback(result) {
-      console.log(result);
       setArrSearchResult(result);
     }
     function failureCallback() {

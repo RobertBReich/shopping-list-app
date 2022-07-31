@@ -1,10 +1,11 @@
 import "./App.css";
 import Searchbar from "./components/Searchbar";
 import SearchResultList from "./components/SearchResultList";
-import Headline from "./components/Headline";
 import React, { useEffect } from "react";
-import { useShoppingStore, useShoppingCategoriesStore } from "./useStore";
+import useShoppingStore from "./components/zustände/useShoppingStore";
+import useShoppingCategoriesStore from "./components/zustände/useShoppingCategoriesStore";
 import ShoppingList from "./components/ShoppingList";
+import LanguageChoice from "./components/LanguageChoice";
 
 function App() {
   const strShoppingItemsURL = "https://fetch-me.vercel.app/api/shopping/items";
@@ -38,7 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      <Headline />
+      <LanguageChoice />
       <div className="App-header">
         <ShoppingList />
         <Searchbar />

@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
-import {
-  useStore,
-  useActiveShoppingItemsStore,
-  useSearchResultStore,
-} from "../useStore";
-
+import React from "react";
+import useActiveShoppingItemsStore from "./zustände/useActiveShoppingItemsStore";
+import useSearchStringStore from "./zustände/useSearchStringStore";
+import useSearchResultStore from "./zustände/useSearchResultStore";
+import useLanguageStore from "./zustände/useLanguageStore";
 import { nanoid } from "nanoid";
 import styled from "styled-components";
 
@@ -33,12 +31,21 @@ const Button = styled.button`
   }
 `;
 
+const ErrorMessage = styled.p`
+  text-align: center;
+`;
+
 export default function SearchResultList() {
-  const searchString = useStore((state) => state.searchString);
-  const setSearchString = useStore((state) => state.setSearchString);
+  const searchString = useSearchStringStore((state) => state.searchString);
+  //const setSearchString = useStore((state) => state.setSearchString);
   const setArrActiveShoppingItems = useActiveShoppingItemsStore(
     (state) => state.setArrActiveShoppingItems
   );
+  const strLanguage = useLanguageStore((state) => state.strLanguage);
+  let errorMsg =
+    strLanguage === "de"
+      ? "Wir konnten nicht finden, wonach du gesucht hast. Das tut uns ehrlich leid. 😂 "
+      : "Didn't find what you were looking.";
 
   let arrSearchResult =
     useSearchResultStore((state) => state.arrSearchResult) || [];
@@ -48,18 +55,16 @@ export default function SearchResultList() {
   function handleButtonClick(event) {
     // category._ref
     // _id -> name.de
-    console.log(event.target.id);
     // put _id into localStorage.
     setArrActiveShoppingItems(arrSearchResult[event.target.id]._id);
-
-    //const _ref = arrSearchResult.category._ref;
-    //console.log("cat_ref: " + _ref);
   }
 
   return (
     <section className="search-result-list">
       {searchFailed ? (
         arrSearchResult.map((items, index) => {
+          // limiter
+          //if (index >= 20) return null;
           return (
             <Button
               key={nanoid()}
@@ -67,15 +72,12 @@ export default function SearchResultList() {
               style={{ animationDelay: 0.003 * index + "s" }}
               onClick={handleButtonClick}
             >
-              {items.name.de}
+              {items.name[strLanguage]}
             </Button>
           );
         })
       ) : (
-        <p>
-          Wir konnten nicht finden, wonach du gesucht hast. Das tut uns ehrlich
-          leid. 😂
-        </p>
+        <ErrorMessage>{errorMsg}</ErrorMessage>
       )}
     </section>
   );
