@@ -53,7 +53,7 @@ export default function ShoppingList() {
 
         arrShoppingCategories.map((category, index) => {
           return (
-            <article key={nanoid()}>
+            <article key={category._id}>
               <Hazwo>
                 <span>{icon}</span> {category.name[strLanguage]}
               </Hazwo>

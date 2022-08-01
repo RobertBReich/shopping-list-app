@@ -4,7 +4,7 @@ import useActiveShoppingItemsStore from "./zustände/useActiveShoppingItemsStore
 import useShoppingStore from "./zustände/useShoppingStore";
 import useShoppingCategoriesStore from "./zustände/useShoppingCategoriesStore";
 import useLanguageStore from "./zustände/useLanguageStore";
-import { nanoid } from "nanoid";
+//import { nanoid } from "nanoid";
 import styled from "styled-components";
 
 // Search Result Button
@@ -59,7 +59,7 @@ export default function SelectedItems(cat) {
 
         return objItem.category._ref === cat.category._id ? (
           <Button
-            key={nanoid()}
+            key={objItem._id} // nanoid() is doof!
             style={{ animationDelay: 0.003 * index + "s" }}
           >
             {name}

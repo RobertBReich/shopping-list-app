@@ -3,7 +3,7 @@ import useActiveShoppingItemsStore from "./zustände/useActiveShoppingItemsStore
 import useSearchStringStore from "./zustände/useSearchStringStore";
 import useSearchResultStore from "./zustände/useSearchResultStore";
 import useLanguageStore from "./zustände/useLanguageStore";
-import { nanoid } from "nanoid";
+//import { nanoid } from "nanoid";
 import styled from "styled-components";
 
 // Search Result Button
@@ -25,7 +25,7 @@ const Button = styled.button`
       bottom: -8px;
     }
     100% {
-      opacity: 1;
+      opacity: 1 !important;
       bottom: 0px;
     }
   }
@@ -67,7 +67,7 @@ export default function SearchResultList() {
           //if (index >= 20) return null;
           return (
             <Button
-              key={nanoid()}
+              key={items._id}
               id={index}
               style={{ animationDelay: 0.003 * index + "s" }}
               onClick={handleButtonClick}
