@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import arrActiveShoppingItems from "./zustände/useActiveShoppingItemsStore";
-
 import useActiveShoppingItemsStore from "./zustände/useActiveShoppingItemsStore";
 import useShoppingStore from "./zustände/useShoppingStore";
 import useShoppingCategoriesStore from "./zustände/useShoppingCategoriesStore";
@@ -23,23 +22,14 @@ const Button = styled.button`
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 10px 5px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.1s;
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      bottom: -8px;
-    }
-    100% {
-      opacity: 1;
-      bottom: 0px;
-    }
-  }
 `;
 
 export default function SelectedItems(cat) {
   const arrActiveShoppingItems = useActiveShoppingItemsStore(
     (state) => state.arrActiveShoppingItems
+  );
+  const setArrActiveShoppingItems = useActiveShoppingItemsStore(
+    (state) => state.setArrActiveShoppingItems
   );
   const arrShoppingCategories = useShoppingCategoriesStore(
     (state) => state.arrShoppingCategories
@@ -47,9 +37,20 @@ export default function SelectedItems(cat) {
   const arrShoppingItems = useShoppingStore((state) => state.arrShoppingItems);
   const strLanguage = useLanguageStore((state) => state.strLanguage);
 
+  // persist
+  useEffect(() => {
+    // if (arrActiveShoppingItems.length === 0) {
+    //   let data = JSON.parse(localStorage.getItem("shopping.activeItems"));
+    //   //console.log("- local data -");
+    //   //console.log(data);
+    //   if (data.length > 0) setArrActiveShoppingItems(data);
+    //   //console.log(arrActiveShoppingItems);
+    // }
+  });
+
   return (
     <Div>
-      {arrActiveShoppingItems.map((item) => {
+      {arrActiveShoppingItems.map((item, index) => {
         let objItem = arrShoppingItems.find(
           (shopItem) => shopItem._id === item
         );
@@ -57,7 +58,12 @@ export default function SelectedItems(cat) {
         let name = objItem.name[strLanguage];
 
         return objItem.category._ref === cat.category._id ? (
-          <Button key={nanoid()}>{name}</Button>
+          <Button
+            key={nanoid()}
+            style={{ animationDelay: 0.003 * index + "s" }}
+          >
+            {name}
+          </Button>
         ) : null;
       })}
     </Div>

@@ -53,11 +53,14 @@ export default function Searchbar() {
     fuzzySearch().then(successCallback, failureCallback);
   }
 
+  let placeholder =
+    strLanguage === "de" ? " Tippe um zu suchen..." : " Type to search...";
+
   return (
     <Section>
       <Input
         type="search"
-        placeholder=" Tippe um zu suchen"
+        placeholder={placeholder}
         aria-labelledby="search-title"
         onChange={handleChange}
       ></Input>
