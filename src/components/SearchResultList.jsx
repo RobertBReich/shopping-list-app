@@ -64,7 +64,7 @@ export default function SearchResultList() {
       {searchFailed ? (
         arrSearchResult.map((items, index) => {
           // limiter
-          //if (index >= 20) return null;
+          if (index >= 20) return null;
           return (
             <Button
               key={nanoid()}

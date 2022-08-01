@@ -37,6 +37,8 @@ html {
 h1,
 h2,
 h3 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: 300;
   line-height: 1.2;
 }
 body,
